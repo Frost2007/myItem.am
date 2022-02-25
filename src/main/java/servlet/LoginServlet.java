@@ -29,7 +29,7 @@ public class LoginServlet extends HttpServlet {
 
         User user = userManager.getUserByEmailAndPassword(email, password);
         if (user == null) {
-            req.getRequestDispatcher("/main.jsp").forward(req, resp);
+            req.getRequestDispatcher("/firstPage.jsp").forward(req, resp);
         } else {
             HttpSession session = req.getSession();
             session.setAttribute("user", user);

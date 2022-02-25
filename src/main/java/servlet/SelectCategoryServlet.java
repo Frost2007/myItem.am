@@ -13,12 +13,17 @@ import java.io.IOException;
 import java.util.List;
 @WebServlet(urlPatterns = "/category")
 public class SelectCategoryServlet extends HttpServlet {
-    Category category = new Category();
+
     ItemManager itemManager = new ItemManager();
-    List<Item> itemsByCat = itemManager.getItemsByCategoryID(category);
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setAttribute("item",itemsByCat);
-        req.getRequestDispatcher("index.jsp");
+        String catId = req.getParameter("catId");
+
+        int id = Integer.parseInt(catId);
+        List<Item> itemsByCategoryID = itemManager.getItemsByCategoryID(id);
+        req.setAttribute("items",itemsByCategoryID);
+
+        req.getRequestDispatcher("firstPage.jsp").forward(req,resp);
     }
 }

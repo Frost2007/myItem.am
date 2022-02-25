@@ -20,14 +20,13 @@ public class ItemManager {
     public boolean addItem(Item item) {
         String sql = "INSERT INTO my_item_am.item(title,price,category_id,pic_url,user_id) VALUES(?,?,?,?,?)";
         try {
-            PreparedStatement statement = connection.prepareStatement(sql);
+            PreparedStatement statement = connection.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
             statement.setString(1, item.getTitle());
             statement.setDouble(2, item.getPrice());
             statement.setInt(3, item.getCategory().getId());
             statement.setString(4, item.getPicUrl());
             statement.setInt(5, item.getUser().getId());
             statement.executeUpdate();
-
             ResultSet resultSet = statement.getGeneratedKeys();
             if (resultSet.next()) {
                 item.setId(resultSet.getInt(1));
@@ -55,12 +54,12 @@ public class ItemManager {
         }
         return null;
     }
-    public List<Item> getItemsByCategoryID(Category category){
+    public List<Item> getItemsByCategoryID(int catId){
         String sql = "SELECT * FROM my_item_am.item WHERE category_id=?";
         List<Item> items = new ArrayList<>();
         try {
            PreparedStatement statement = connection.prepareStatement(sql);
-           statement.setInt(1,category.getId());
+           statement.setInt(1,catId);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()){
                 items.add(getItemFromResultSet(resultSet));
@@ -105,7 +104,7 @@ public class ItemManager {
     }
 
     public void deleteItemById(int id) {
-        String sql = "DELETE FROM my_item_am WHERE id=?";
+        String sql = "DELETE FROM my_item_am.item WHERE id=?";
         try {
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setInt(1,id);

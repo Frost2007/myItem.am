@@ -43,7 +43,7 @@ public class RegisterServlet extends HttpServlet {
         user.setPassword(password);
 
         userManager.addUser(user);
-       req.getRequestDispatcher("userHome1.jsp").forward(req,resp);
+       req.getRequestDispatcher("/userHome").forward(req,resp);
     }
 }
 

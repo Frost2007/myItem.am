@@ -21,7 +21,7 @@ public class AuthorisationFilter implements Filter {
         HttpServletRequest req = (HttpServletRequest) servletRequest;
         User user = (User) req.getSession().getAttribute("user");
         if (user == null) {
-            ((HttpServletResponse) servletResponse).sendRedirect("/index.jsp");
+            ((HttpServletResponse) servletResponse).sendRedirect("/firstPage.jsp");
         } else {
             filterChain.doFilter(servletRequest, servletResponse);
         }
